@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "process.h"
 
 int is_valid(int n, int l, int h)
@@ -56,5 +57,28 @@ void enter_process_details(int n, process p1[n])
     }
     printf("\n");
     i++;
+  }
+}
+
+void display_gannt_chart(process p[10], int n)
+{
+  pid_t p1 = fork(); // create child 1
+  pid_t p2 = fork(); // create child 2
+
+  if (p1 && p2)
+  {
+    // in parent: FCFS code comes here
+  }
+  else if (p1 && (!p2))
+  {
+    // in child1: SJFS code comes here
+  }
+  else if (p2 && (!p1))
+  {
+    // in child2: SRTF code comes here
+  }
+  else
+  {
+    // in child 3 (child 2's child): RR code comes here
   }
 }
