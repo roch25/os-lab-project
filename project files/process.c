@@ -2,6 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "process.h"
+#include "scheduling.h"
 
 int is_valid(int n, int l, int h)
 {
@@ -64,7 +65,6 @@ void display_gannt_chart(process p[10], int n)
 {
   pid_t p1 = fork(); // create child 1
   pid_t p2 = fork(); // create child 2
-
   if (p1 && p2)
   {
     // in parent: FCFS code comes here
@@ -75,7 +75,7 @@ void display_gannt_chart(process p[10], int n)
   }
   else if (p2 && (!p1))
   {
-    // in child2: SRTF code comes here
+    shortest_remaining_time_first(p, n);
   }
   else
   {
