@@ -15,6 +15,45 @@ void print_table(process p[], int n)
     }
 }
 
+void print_gantt_chart(process p[], int n)
+{
+    int i, j;
+    // print top bar
+    printf(" ");
+    for(i=0; i<n; i++) {
+        for(j=0; j<p[i].burst_time; j++) printf("--");
+        printf(" ");
+    }
+    printf("\n|");
+
+    // printing process name in the middle
+    for(i=0; i<n; i++) {
+        for(j=0; j<p[i].burst_time - 1; j++) printf(" ");
+        printf("%s", p[i].process_name);
+        for(j=0; j<p[i].burst_time - 1; j++) printf(" ");
+        printf("|");
+    }
+    printf("\n ");
+    // printing bottom bar
+    for(i=0; i<n; i++) {
+        for(j=0; j<p[i].burst_time; j++) printf("--");
+        printf(" ");
+    }
+    printf("\n");
+
+    // printing the timeline
+    printf("0");
+    for(i=0; i<n; i++) {
+        for(j=0; j<p[i].burst_time; j++) printf("  ");
+        if(p[i].turnaround_time > 9) 
+          printf("\b");
+        printf("%d", p[i].turnaround_time);
+
+    }
+    printf("\n\n");
+
+} 
+
 void shortest_remaining_time_first(process p[10], int n)
 {
   process p_tmp;
@@ -46,5 +85,13 @@ void first_come_first_served(process p[10], int n)
     }
 
     print_table(p, n);
+    // printing Gantt chart
+    puts("\nGANTT CHART\n");
+    print_gantt_chart(p, n);
+
+    printf("Total Waiting Time      : %-2d\n", sum_waiting_time);
+    printf("Average Waiting Time    : %-2.2lf\n", (double)sum_waiting_time / (double) n);
+    printf("Total Turnaround Time   : %-2d\n", sum_turnaround_time);
+    printf("Average Turnaround Time : %-2.2lf\n", (double)sum_turnaround_time / (double) n);
 
 }
