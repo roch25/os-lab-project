@@ -6,7 +6,7 @@
 struct process
 {
   char process_name[25];
-  int arrival_time, burst_time;
+  int arrival_time, burst_time, waiting_time, turnaround_time;
 };
 typedef struct process process;
 
