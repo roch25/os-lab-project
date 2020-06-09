@@ -42,7 +42,7 @@ void enter_process_details(int n, process p1[n])
       printf("A process with this process name already exists. Enter the process name again \n");
       scanf("%s", p1[i].process_name);
     }
-    printf("Enter arrival time (in milliseconds)\n");
+    printf("Enter arrival time (in milliseconds) [Note: Arrival time for FCFS is automatically set to 0]\n");
     scanf("%d", &p1[i].arrival_time);
     while (is_valid(p1[i].arrival_time, TIME_MIN, TIME_MAX))
     {
@@ -67,7 +67,11 @@ void display_gannt_chart(process p[10], int n)
   pid_t p2 = fork(); // create child 2
   if (p1 && p2)
   {
-    // in parent: FCFS code comes here
+    for(int i = 0; i < n; i++)
+    {
+        p[i].waiting_time = p[i].turnaround_time = p[i].arrival_time = 0;
+    }
+    first_come_first_served(p, n);
   }
   else if (p1 && (!p2))
   {
