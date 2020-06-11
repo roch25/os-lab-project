@@ -54,6 +54,14 @@ void enter_process_details(int n, process p1[n])
       printf("Burst time should be between %d and %d (inclusive). Please enter the number of procceses again\n", TIME_MIN, TIME_MAX);
       scanf("%d", &p1[i].burst_time);
     }
+
+    printf("Enter priority [0 - highest ... 5 - lowest]\n");
+    scanf("%d", &p1[i].priority);
+    while (is_valid(p1[i].priority, 0, 5))
+    {
+      printf("Burst time should be between %d and %d (inclusive). Please enter the number of procceses again\n", TIME_MIN, TIME_MAX);
+      scanf("%d", &p1[i].priority);
+    }
     printf("\n");
     i++;
   }
