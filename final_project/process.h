@@ -9,3 +9,7 @@ struct process
   int arrival_time, burst_time, waiting_time, turnaround_time, flag, priority;
 };
 typedef struct process process;
+
+int is_valid(int, int, int);                       // funtion to validate the user input for a particular variable is between limits, 2nd arg takes the lower limit and third variable takes the upper limit
+void enter_process_details(int, process p1[10]);   // funtion to take input of process details
+int check_unique_process_name(int, process p[10]); // funtion to take check if the process name is unique
