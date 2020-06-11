@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include "process.h"
-#include "scheduling.h"
 
 int is_valid(int n, int l, int h)
 {
