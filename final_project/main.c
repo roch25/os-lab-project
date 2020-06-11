@@ -8,7 +8,9 @@
 */
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "process.h"
+#include "scheduling.h"
 
 int main(int argc, char const *argv[])
 {
@@ -21,8 +23,8 @@ int main(int argc, char const *argv[])
     printf("Number of procceses should be between %d and %d (inclusive). Please enter the number of procceses again\n", NUM_OF_PROCESSES_MIN, NUM_OF_PROCESSES_MAX);
     scanf("%d", &num_of_processes);
   }
-  process p1[num_of_processes]; // [declaration] an array of type 'process' and size num_of_processes
-  enter_process_details(num_of_processes, p1);
+  process p[num_of_processes]; // [declaration] an array of type 'process' and size num_of_processes
+  enter_process_details(num_of_processes, p);
 
   printf("\nEnter the time quantum for Round Robin ");
   fflush(stdin);
@@ -33,7 +35,7 @@ int main(int argc, char const *argv[])
 
   if (p1 && p2)
   {
-   
+        first_come_first_served(p, num_of_processes);
   }
   else if (p1 && (!p2))
   {
