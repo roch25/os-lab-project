@@ -10,10 +10,9 @@
 #include <string.h>
 #include "process.h"
 
-
 int main(int argc, char const *argv[])
 {
-  int num_of_processes;
+  int num_of_processes, time_slice;
   printf("This is a program to display Gannt Chart and calculate and display the Response Time, Waiting Time and Turnaround time for a set of user-input participating procceses for various scheduling algorithms\n");
   printf("Enter the number of procceses\n");
   scanf("%d", &num_of_processes);
@@ -24,5 +23,29 @@ int main(int argc, char const *argv[])
   }
   process p1[num_of_processes]; // [declaration] an array of type 'process' and size num_of_processes
   enter_process_details(num_of_processes, p1);
+
+  printf("\nEnter the time quantum for Round Robin ");
+  fflush(stdin);
+  scanf("%d", &time_slice);
+
+  pid_t p1 = fork(); // create child 1
+  pid_t p2 = fork(); // create child 2
+
+  if (p1 && p2)
+  {
+   
+  }
+  else if (p1 && (!p2))
+  {
+   
+  }
+  else if (p2 && (!p1))
+  {
+   
+  }
+  else
+  {
+    
+  }
   return 0;
 }
