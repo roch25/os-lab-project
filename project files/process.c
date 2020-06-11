@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include "process.h"
 #include "scheduling.h"
 
@@ -63,6 +64,10 @@ void enter_process_details(int n, process p1[n])
 
 void display_gannt_chart(process p[10], int n)
 {
+  int time_slice;
+  printf("\nEnter the time quantum for Round Robin ");
+  fflush(stdin);
+  scanf("%d", &time_slice);
   pid_t p1 = fork(); // create child 1
   pid_t p2 = fork(); // create child 2
   if (p1 && p2)
@@ -83,6 +88,6 @@ void display_gannt_chart(process p[10], int n)
   }
   else
   {
-    // in child 3 (child 2's child): RR code comes here
+    round_robin(p, n, time_slice);
   }
 }
