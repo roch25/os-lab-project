@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "process.h"
+#include "scheduling.h"
 
 int is_valid(int n, int l, int h)
 {
@@ -44,22 +45,21 @@ void enter_process_details(int n, process p1[n])
     scanf("%d", &p1[i].arrival_time);
     while (is_valid(p1[i].arrival_time, TIME_MIN, TIME_MAX))
     {
-      printf("Arrival time should be between %d and %d (inclusive). Please enter the number of procceses again\n", TIME_MIN, TIME_MAX);
+      printf("Arrival time should be between %d and %d (inclusive). Please enter the arrival time again\n", TIME_MIN, TIME_MAX);
       scanf("%d", &p1[i].arrival_time);
     }
     printf("Enter CPU burst time(in milliseconds)\n");
     scanf("%d", &p1[i].burst_time);
     while (is_valid(p1[i].burst_time, TIME_MIN, TIME_MAX))
     {
-      printf("Burst time should be between %d and %d (inclusive). Please enter the number of procceses again\n", TIME_MIN, TIME_MAX);
+      printf("Burst time should be between %d and %d (inclusive). Please enter the burst time again\n", TIME_MIN, TIME_MAX);
       scanf("%d", &p1[i].burst_time);
     }
-
     printf("Enter priority [0 - highest ... 5 - lowest]\n");
     scanf("%d", &p1[i].priority);
     while (is_valid(p1[i].priority, 0, 5))
     {
-      printf("Burst time should be between %d and %d (inclusive). Please enter the number of procceses again\n", 0, 5);
+      printf("Priority should be between %d and %d (inclusive). Please enter the priority again\n", 0, 5);
       scanf("%d", &p1[i].priority);
     }
     printf("\n");
