@@ -6,15 +6,33 @@
   Title: Pl206 Lab Project
   Description: Program to display Gannt Chart and calculate and display the Response Time, Waiting Time and Turnaround time for a set of user-input participating procceses or various scheduling algorithms
 */
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include "process.h"
 #include "scheduling.h"
 
+void signal_handler(int signo)
+{
+	int i,j;
+	if(signo==SIGINT)
+	{	
+    return;
+	}
+	else if(signo==SIGTSTP)
+	{
+		printf("\nexiting\n");
+		exit(0);
+	}
+}
+
 int main(int argc, char const *argv[])
 {
+  signal(SIGINT, signal_handler);
   int num_of_processes, time_slice, status;
   printf("This is a program to display Gannt Chart and calculate and display the Response Time, Waiting Time and Turnaround time for a set of user-input participating procceses for various scheduling algorithms\n");
   printf("Enter the number of procceses\n");
@@ -51,8 +69,8 @@ int main(int argc, char const *argv[])
   }
   else
   {
-     wait(&status);
-       priority(p, num_of_processes);
+        wait(&status);
+        priority(p, num_of_processes);
   }
   return 0;
 }

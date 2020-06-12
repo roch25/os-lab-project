@@ -52,9 +52,9 @@ void enter_process_details(int n, process p1[n])
     }
     printf("Enter CPU burst time(in milliseconds)\n");
     scanf("%d", &p1[i].burst_time);
-    while (is_valid(p1[i].burst_time, TIME_MIN, TIME_MAX))
+    while (is_valid(p1[i].burst_time, TIME_MIN + 1, TIME_MAX))
     {
-      printf("Burst time should be between %d and %d (inclusive). Please enter the number of procceses again\n", TIME_MIN, TIME_MAX);
+      printf("Burst time should be between %d and %d (inclusive). Please enter the number of procceses again\n", TIME_MIN + 1, TIME_MAX);
       scanf("%d", &p1[i].burst_time);
     }
     printf("\n");
