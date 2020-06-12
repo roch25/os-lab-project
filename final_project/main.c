@@ -9,12 +9,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include "process.h"
 #include "scheduling.h"
 
 int main(int argc, char const *argv[])
 {
-  int num_of_processes, time_slice;
+  int num_of_processes, time_slice, status;
   printf("This is a program to display Gannt Chart and calculate and display the Response Time, Waiting Time and Turnaround time for a set of user-input participating procceses for various scheduling algorithms\n");
   printf("Enter the number of procceses\n");
   scanf("%d", &num_of_processes);
@@ -35,15 +36,18 @@ int main(int argc, char const *argv[])
 
   if (p1 && p2)
   {
-        first_come_first_served(p, num_of_processes);
+      wait(&status);
+      first_come_first_served(p, num_of_processes);
   }
   else if (p1 && (!p2))
   {
-   
+      wait(&status);
+      shortest_job_first_scheduling(p, num_of_processes);
   }
   else if (p2 && (!p1))
   {
-   
+       wait(&status);
+       
   }
   else
   {
