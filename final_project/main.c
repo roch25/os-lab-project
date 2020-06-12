@@ -47,11 +47,12 @@ int main(int argc, char const *argv[])
   else if (p2 && (!p1))
   {
        wait(&status);
-       
+       round_robin(p, num_of_processes, time_slice);
   }
   else
   {
-    
+     wait(&status);
+       priority(p, num_of_processes);
   }
   return 0;
 }

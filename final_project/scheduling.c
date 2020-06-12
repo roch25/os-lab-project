@@ -2,6 +2,11 @@
 #include <unistd.h>
 #include "process.h"
 #include "scheduling.h"
+#define BLUE "\x1b[37m"
+#define GREEN "\x1b[34m"
+#define RESET "\x1b[0m"
+#define CYAN "\x1b[36m"
+#define YELLOW "\x1b[33m"
 
 void sort(process p[],int n)
 {
@@ -21,6 +26,7 @@ void sort(process p[],int n)
 // First Come First Served
 void first_come_first_served(process p[10], int n)
 {
+	printf(YELLOW);
 	process temp[10];
 	int sum_waiting_time = 0, sum_turnaround_time = 0;
 	int x = 0;
@@ -47,7 +53,7 @@ void first_come_first_served(process p[10], int n)
     printf("| Name | Arrival Time |  Burst Time |  Waiting Time  | Turnaround Time   |");
     printf("\n.------.--------------.-------------.----------------.-------------------.");
     for(i=0;i<n;i++)
-    printf("\n|  %s  |       %d      |       %d     |      %d         |        %d          |",temp[i].process_name,temp[i].burst_time,temp[i].arrival_time, temp[i].waiting_time,temp[i].turnaround_time);
+    	printf("\n|  %s  |       %d      |       %d     |      %d         |         %d         |",temp[i].process_name,temp[i].arrival_time, temp[i].burst_time,temp[i].waiting_time,temp[i].turnaround_time);
     printf("\n.------.--------------.-------------.----------------.-------------------.");
  
     printf("\n\n GANTT CHART\n\n");
@@ -61,11 +67,13 @@ void first_come_first_served(process p[10], int n)
         printf("%d      ",x);
     }
     printf("\n\n Average waiting time = %0.2f\n Average turn-around = %0.2f.",avg_waiting_time,avg_turnaround_time);
+	printf(RESET);
 }
 
 // Shortest Job First - Pre-emptive
 void shortest_job_first_scheduling(process p[],int n)
 {
+	printf(GREEN);
 	int i, t_total = 0,tcurr, b[10], j, x, min_burst_time;
 	int sum_waiting_time = 0, sum_turnaround_time = 0;
 	float avg_waiting_time = 0.0, avg_turnaround_time = 0.0;
@@ -101,8 +109,6 @@ void shortest_job_first_scheduling(process p[],int n)
 			sum_waiting_time += temp[i].waiting_time;
 			sum_turnaround_time += temp[i].turnaround_time;
 		}
-
-       
  
 		j=i;	
         min_burst_time = 999;
@@ -123,9 +129,112 @@ void shortest_job_first_scheduling(process p[],int n)
     printf("| Name | Arrival Time |  Burst Time |  Waiting Time  | Turnaround Time   |");
     printf("\n.------.--------------.-------------.----------------.-------------------.");
     for(i=0;i<n;i++)
-    printf("\n|  %s  |       %d      |       %d     |      %d         |         %d         |",temp[i].process_name,temp[i].burst_time,temp[i].arrival_time, temp[i].waiting_time,temp[i].turnaround_time);
+    printf("\n|  %s  |       %d      |       %d     |      %d         |         %d         |",temp[i].process_name,temp[i].arrival_time, temp[i].burst_time,temp[i].waiting_time,temp[i].turnaround_time);
     printf("\n.------.--------------.-------------.----------------.-------------------.");
 	avg_waiting_time = (float)sum_waiting_time/n;	
     avg_turnaround_time = (float)sum_turnaround_time/n;
 	printf("\n\n Average waitiing time = %0.2f\n Average turn-ffaround = %0.2f.",avg_waiting_time,avg_turnaround_time);
+	printf(RESET);
+}
+
+//Round Robin Scheduling
+void round_robin(process p[],int n, int Q)
+{
+	printf(BLUE);
+	int pflag=0,t,tcurr=0,k,i;
+	int sumw=0,sumt=0;
+	float avgwt=0.0,avgta=0.0;
+	process temp1[10], temp2[10];	
+	printf("\nROUND ROBIN\n");
+	for(i=0;i<n;i++)
+		temp1[i]=p[i];
+
+	sort(temp1, n);
+	
+	for(i=0;i<n;i++)
+		temp2[i] = temp1[i];
+	
+	for(k=0;;k++){
+		if(k>n-1)
+			k=0;
+		if(temp1[k].burst_time>0)
+			printf("  %d  %s",tcurr,temp1[k].process_name);
+		t=0;
+		while(t<Q && temp1[k].burst_time > 0){
+			t++;
+			tcurr++;
+			temp1[k].burst_time--;
+		}  
+		if(temp1[k].burst_time <= 0 && temp1[k].flag != 1){
+			temp1[k].waiting_time = tcurr - temp2[k].burst_time - temp1[k].arrival_time;
+			temp1[k].turnaround_time = tcurr - temp1[k].arrival_time;
+			pflag++;
+			temp1[k].flag = 1;
+			sumw += temp1[k].waiting_time;
+			sumt += temp1[k].turnaround_time;
+		}
+		if(pflag == n)
+			break;
+	}
+	printf("  %d",tcurr);
+	avgwt = (float)sumw/n;
+	avgta = (float)sumt/n;
+	printf("\n\n Average waiting time = %0.2f\n Average turn-around = %0.2f.",avgwt,avgta);
+	printf(RESET);
+}
+
+//Priority Non Pre-emptive
+void priority(process p[],int n)
+{
+	process temp[10];
+	process t;
+	int sumw=0,sumt=0;
+	float avgwt=0.0,avgta=0.0;
+	int i,j;
+	int x = 0;
+
+	for(i=0;i<n;i++)
+		temp[i]=p[i];
+
+	sort(temp,n);
+
+	for(i=2;i<n;i++)
+		for(j=1;j<n-i+1;j++){
+			if(temp[j].priority > temp[j+1].priority){
+				t = temp[j];
+				temp[j] = temp[j+1];
+				temp[j+1] = t;
+			}
+		}
+
+	printf("\nPRIORITY\n PROC.\tB.T.\tA.T.");
+		for(i=0;i<n;i++)
+			printf("\n %s\t%d\t%d",temp[i].process_name,temp[i].burst_time,temp[i].arrival_time);
+
+		sumw = temp[0].waiting_time = 0;
+		sumt = temp[0].turnaround_time = temp[0].burst_time - temp[0].arrival_time;
+
+		for(i=1;i<n;i++){
+			temp[i].waiting_time = (temp[i-1].burst_time + temp[i-1].arrival_time + temp[i-1].waiting_time) - temp[i].arrival_time;;
+			temp[i].turnaround_time = (temp[i].waiting_time + temp[i].burst_time);
+			sumw+=temp[i].waiting_time;
+			sumt+=temp[i].turnaround_time;
+		}
+		avgwt = (float)sumw/n;
+		avgta = (float)sumt/n;
+		printf("\n\n PROC.\tB.T.\tA.T.\tW.T\tT.A.T");
+		for(i=0;i<n;i++)
+			printf("\n %s\t%d\t%d\t%d\t%d",temp[i].process_name,temp[i].burst_time,temp[i].arrival_time,temp[i].waiting_time,temp[i].turnaround_time);
+		
+		printf("\n\n GANTT CHART\n ");
+		for(i=0;i<n;i++)
+			printf("   %s   ",temp[i].process_name);
+		printf("\n ");
+
+		printf("0\t");
+		for(i=1;i<=n;i++){
+			x+=temp[i-1].burst_time;
+			printf("%d      ",x);
+		}
+		printf("\n\n Average waiting time = %0.2f\n Average turn-around = %0.2f.",avgwt,avgta);
 }
