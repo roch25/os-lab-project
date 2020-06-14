@@ -33,7 +33,7 @@ void signal_handler(int signo)
 int main(int argc, char const *argv[])
 {
   signal(SIGINT, signal_handler);
-  int num_of_processes, time_slice, status;
+  int num_of_processes, time_slice, status, status1, status2, status3, status4;
   printf("This is a program to display Gannt Chart and calculate and display the Response Time, Waiting Time and Turnaround time for a set of user-input participating procceses for various scheduling algorithms\n");
   printf("Enter the number of procceses\n");
   scanf("%d", &num_of_processes);
@@ -54,22 +54,22 @@ int main(int argc, char const *argv[])
 
   if (p1 && p2)
   {
-      wait(&status);
+      wait(&status1);
       first_come_first_served(p, num_of_processes);
   }
   else if (p1 && (!p2))
   {
-      wait(&status);
+      wait(&status2);
       shortest_job_first_scheduling(p, num_of_processes);
   }
   else if (p2 && (!p1))
   {
-       wait(&status);
+       wait(&status3);
        round_robin(p, num_of_processes, time_slice);
   }
   else
   {
-        wait(&status);
+        wait(&status4);
         priority(p, num_of_processes);
   }
   return 0;
