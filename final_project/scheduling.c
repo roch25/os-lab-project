@@ -207,11 +207,14 @@ void priority(process p[],int n, float* avgwt, float* avgta)
 				temp[j+1] = t;
 			}
 		}
-
-	printf("\nPRIORITY\n PROC.\tB.T.\tA.T.");
+	
+	printf("\nPRIORITY Scheduling\n");
+	 printf(".---------------.--------------.-------------.\n");
+	printf("| Process Name |  Burst Time | Arrival Time |");
+	printf("\n.---------------.--------------.-------------.");
 		for(i=0;i<n;i++)
-			printf("\n %s\t%d\t%d",temp[i].process_name,temp[i].burst_time,temp[i].arrival_time);
-
+			printf("\n   %s          %d              %d            ",temp[i].process_name,temp[i].burst_time,temp[i].arrival_time);
+			 printf("\n.---------------.--------------.-------------.\n");
 		sumw = temp[0].waiting_time = 0;
 		sumt = temp[0].turnaround_time = temp[0].burst_time - temp[0].arrival_time;
 
@@ -223,10 +226,13 @@ void priority(process p[],int n, float* avgwt, float* avgta)
 		}
 		*avgwt = (float)sumw/n;
 		*avgta = (float)sumt/n;
-		printf("\n\n PROC.\tB.T.\tA.T.\tW.T\tT.A.T");
+		 printf("\n\n.------.--------------.-------------.----------------.-------------------.\n");
+		//printf("\n\n PROC.\tB.T.\tA.T.\tW.T\tT.A.T");
+		printf("| PROC | Burst Time |  Arrival Time |  Waiting Time  | Turnaround Time   |");
+		printf("\n.------.--------------.-------------.----------------.-------------------.");
 		for(i=0;i<n;i++)
-			printf("\n %s\t%d\t%d\t%d\t%d",temp[i].process_name,temp[i].burst_time,temp[i].arrival_time,temp[i].waiting_time,temp[i].turnaround_time);
-		
+			printf("\n   %s          %d              %d            %d                   %d          ",temp[i].process_name,temp[i].burst_time,temp[i].arrival_time,temp[i].waiting_time,temp[i].turnaround_time);
+		printf("\n.------.--------------.-------------.----------------.-------------------.");
 		printf("\n\n GANTT CHART\n ");
 		for(i=0;i<n;i++)
 			printf("   %s   ",temp[i].process_name);
