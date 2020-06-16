@@ -2,6 +2,8 @@
 #include <string.h>
 #include "process.h"
 #include "scheduling.h"
+#define RED "\e[1;31m"
+#define RESET "\x1b[0m"
 
 int is_valid(int n, int l, int h)
 {
@@ -38,7 +40,7 @@ void enter_process_details(int n, process p1[n])
     scanf("%s", p1[i].process_name);
     while (check_unique_process_name(i, p1))
     {
-      printf("A process with this process name already exists. Enter the process name again \n");
+      printf(RED"A process with this process name already exists. Enter the process name again \n" RESET);
       scanf("%s", p1[i].process_name);
     }
     printf("Enter arrival time (in milliseconds) [Note: Arrival time for FCFS is automatically set to 0]\n");
@@ -66,4 +68,3 @@ void enter_process_details(int n, process p1[n])
     i++;
   }
 }
-
